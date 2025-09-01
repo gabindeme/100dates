@@ -10,6 +10,10 @@
     "logout": "Se déconnecter",
     "profile": "Profil"
   },
+  "footer": {
+    "made_with": "Fait avec",
+    "by": "par"
+  },
   "pages": {
     "home": {
       "welcome_message": "Bienvenue sur ce boilerplate !"
