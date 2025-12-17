@@ -1,6 +1,8 @@
 {
   "navbar": {
     "home": "Home",
+    "dates": "Our Dates",
+    "souvenirs": "Memories",
     "dashboard": "Dashboard",
     "account": "My account",
     "login": "Login",
@@ -16,7 +18,20 @@
   },
   "pages": {
     "home": {
+      "title": "Our Date Ideas",
+      "dashboard_title": "Dashboard",
+      "dashboard_subtitle": "Our date ideas summary",
+      "view_all": "View all ideas",
       "welcome_message": "Welcome to this boilerplate!"
+    },
+    "dateIdeas": {
+      "title": "Our Date Ideas"
+    },
+    "souvenirs": {
+      "title": "Our Memories",
+      "subtitle": "Moments we've shared together",
+      "memories": "memories",
+      "empty": "No memories yet. Mark some dates as completed!"
     },
     "account": {
       "errors": {
@@ -268,6 +283,103 @@
       "delete": "Delete"
     },
     "expired_session": "Your session has expired, please log in again."
+  },
+  "common": {
+    "loading": "Loading...",
+    "cancel": "Cancel",
+    "save": "Save",
+    "create": "Create"
+  },
+  "dashboard": {
+    "stats": {
+      "total": "Total ideas",
+      "completed": "Completed",
+      "pending": "Pending",
+      "progress": "Progress"
+    },
+    "last_completed": {
+      "title": "Last completed date",
+      "description": "Your latest shared experience",
+      "empty": "No dates completed yet"
+    },
+    "suggestions": {
+      "title": "Suggestions",
+      "description": "Ideas waiting to be done",
+      "empty": "No pending ideas",
+      "reshuffle": "New suggestions"
+    }
+  },
+  "souvenirs": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "days_ago": "{{count}} days ago",
+    "weeks_ago": "{{count}} weeks ago",
+    "months_ago": "{{count}} months ago",
+    "years_ago": "{{count}} years ago"
+  },
+  "categories": {
+    "messages": {
+      "created": "Category created successfully"
+    }
+  },
+  "dates": {
+    "status": {
+      "completed": "Completed",
+      "pending": "Pending"
+    },
+    "actions": {
+      "add": "New idea"
+    },
+    "filters": {
+      "title": "Filters",
+      "category": "Category",
+      "all_categories": "All categories",
+      "status": "Status",
+      "all_status": "All statuses",
+      "search_placeholder": "Search for a date idea...",
+      "show": "Show",
+      "all": "All",
+      "results": "results"
+    },
+    "sort": {
+      "title": "Sort by",
+      "alphabetical": "Alphabetical",
+      "creation_date": "Creation date",
+      "realisation_date": "Completion date"
+    },
+    "form": {
+      "create_title": "New date idea",
+      "edit_title": "Edit idea",
+      "name": "Name",
+      "name_placeholder": "E.g. Candlelit dinner",
+      "note": "Note / Anecdote",
+      "note_placeholder": "A small phrase or memory...",
+      "category": "Category",
+      "category_placeholder": "Select a category",
+      "new_category": "New",
+      "create_category": "Create a category",
+      "category_name_placeholder": "Category name",
+      "category_color": "Color",
+      "add_category": "Add category"
+    },
+    "completion": {
+      "title": "Mark as completed",
+      "description": "When did you complete \"{{title}}\"?",
+      "date_label": "Completion date",
+      "confirm": "Confirm"
+    },
+    "messages": {
+      "created": "Date idea created successfully",
+      "updated": "Date idea updated",
+      "deleted": "Date idea deleted",
+      "marked_complete": "Date marked as completed",
+      "marked_pending": "Date moved back to pending"
+    },
+    "empty": {
+      "title": "No date ideas yet",
+      "action": "Create your first idea",
+      "no_results": "No results found"
+    }
   },
   "server": {
     "global": {

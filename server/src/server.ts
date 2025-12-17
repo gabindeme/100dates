@@ -2,13 +2,17 @@ import { createServer } from "http";
 import { app } from "./app.js";
 import { connectToDatabase } from "./database/connectToDB.js";
 import { initSockets } from "./sockets/socket.js";
+import { seedDefaultCategories } from "./controllers/categoryController.js";
 
 /**
  * Initializes the HTTP server, connects to the database, and sets up WebSockets.
  */
-export function initServer() {
+export async function initServer() {
   // Connect to the database
-  connectToDatabase();
+  await connectToDatabase();
+
+  // Seed default categories
+  await seedDefaultCategories();
 
   // Create an HTTP server using the Express app
   const httpServer = createServer(app);

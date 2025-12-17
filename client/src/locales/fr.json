@@ -1,6 +1,8 @@
 {
   "navbar": {
     "home": "Accueil",
+    "dates": "Nos Dates",
+    "souvenirs": "Souvenirs",
     "dashboard": "Tableau de bord",
     "account": "Mon compte",
     "login": "Se connecter",
@@ -16,7 +18,20 @@
   },
   "pages": {
     "home": {
+      "title": "Nos Idées de Dates",
+      "dashboard_title": "Tableau de bord",
+      "dashboard_subtitle": "Notre résumé des idées de dates",
+      "view_all": "Voir toutes nos idées",
       "welcome_message": "Bienvenue sur ce boilerplate !"
+    },
+    "dateIdeas": {
+      "title": "Nos Idées de Dates"
+    },
+    "souvenirs": {
+      "title": "Nos Souvenirs",
+      "subtitle": "Les moments qu'on a partagés ensemble",
+      "memories": "souvenirs",
+      "empty": "Aucun souvenir pour le moment. Marquez des dates comme réalisées !"
     },
     "account": {
       "errors": {
@@ -268,6 +283,103 @@
       "delete": "Supprimer"
     },
     "expired_session": "Votre session a expiré, veuillez vous reconnecter."
+  },
+  "common": {
+    "loading": "Chargement...",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "create": "Créer"
+  },
+  "dashboard": {
+    "stats": {
+      "total": "Total des idées",
+      "completed": "Réalisées",
+      "pending": "À faire",
+      "progress": "Progression"
+    },
+    "last_completed": {
+      "title": "Dernière date réalisée",
+      "description": "Notre dernière expérience partagée",
+      "empty": "Aucune date réalisée pour le moment"
+    },
+    "suggestions": {
+      "title": "Suggestions",
+      "description": "Des idées à réaliser",
+      "empty": "Aucune idée en attente",
+      "reshuffle": "Nouvelles suggestions"
+    }
+  },
+  "souvenirs": {
+    "today": "Aujourd'hui",
+    "yesterday": "Hier",
+    "days_ago": "Il y a {{count}} jours",
+    "weeks_ago": "Il y a {{count}} semaines",
+    "months_ago": "Il y a {{count}} mois",
+    "years_ago": "Il y a {{count}} ans"
+  },
+  "categories": {
+    "messages": {
+      "created": "Catégorie créée avec succès"
+    }
+  },
+  "dates": {
+    "status": {
+      "completed": "Réalisée",
+      "pending": "À faire"
+    },
+    "actions": {
+      "add": "Nouvelle idée"
+    },
+    "filters": {
+      "title": "Filtres",
+      "category": "Catégorie",
+      "all_categories": "Toutes les catégories",
+      "status": "Statut",
+      "all_status": "Tous les statuts",
+      "search_placeholder": "Rechercher une idée de date...",
+      "show": "Afficher",
+      "all": "Tous",
+      "results": "résultats"
+    },
+    "sort": {
+      "title": "Trier par",
+      "alphabetical": "Alphabétique",
+      "creation_date": "Date de création",
+      "realisation_date": "Date de réalisation"
+    },
+    "form": {
+      "create_title": "Nouvelle idée de date",
+      "edit_title": "Modifier l'idée",
+      "name": "Nom",
+      "name_placeholder": "Ex: Dîner aux chandelles",
+      "note": "Note / Anecdote",
+      "note_placeholder": "Une petite phrase ou souvenir...",
+      "category": "Catégorie",
+      "category_placeholder": "Sélectionnez une catégorie",
+      "new_category": "Nouvelle",
+      "create_category": "Créer une catégorie",
+      "category_name_placeholder": "Nom de la catégorie",
+      "category_color": "Couleur",
+      "add_category": "Ajouter la catégorie"
+    },
+    "completion": {
+      "title": "Marquer comme réalisée",
+      "description": "Quand avez-vous réalisé \"{{title}}\" ?",
+      "date_label": "Date de réalisation",
+      "confirm": "Confirmer"
+    },
+    "messages": {
+      "created": "Idée de date créée avec succès",
+      "updated": "Idée de date mise à jour",
+      "deleted": "Idée de date supprimée",
+      "marked_complete": "Date marquée comme réalisée",
+      "marked_pending": "Date remise en attente"
+    },
+    "empty": {
+      "title": "Aucune idée de date pour le moment",
+      "action": "Créer votre première idée",
+      "no_results": "Aucun résultat trouvé"
+    }
   },
   "server": {
     "global": {

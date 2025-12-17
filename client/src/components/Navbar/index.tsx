@@ -3,7 +3,7 @@ import { ThemeChanger } from "./themeChanger";
 import { LanguageChanger } from "./languageChanger";
 import { useTranslation } from "react-i18next";
 import { Separator } from "../ui/separator";
-import { Home, House, LogOut, Menu, User, Wrench, X } from "lucide-react";
+import { Home, House, LogOut, Menu, User, Wrench, X, Heart, Camera } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
@@ -64,6 +64,18 @@ export const Navbar = () => {
       auth: true,
     },
     {
+      label: t("navbar.dates"),
+      path: "/dates",
+      icon: Heart,
+      auth: true,
+    },
+    {
+      label: t("navbar.souvenirs"),
+      path: "/souvenirs",
+      icon: Camera,
+      auth: true,
+    },
+    {
       label: t("navbar.account"),
       path: "/account",
       icon: User,
@@ -82,6 +94,18 @@ export const Navbar = () => {
       label: t("navbar.home"),
       path: "/",
       icon: House,
+    },
+    {
+      label: t("navbar.dates"),
+      path: "/dates",
+      icon: Heart,
+      auth: !!authUser,
+    },
+    {
+      label: t("navbar.souvenirs"),
+      path: "/souvenirs",
+      icon: Camera,
+      auth: !!authUser,
     },
     {
       label: t("navbar.account"),

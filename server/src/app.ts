@@ -8,6 +8,9 @@ import { router } from "./routes/router.js";
 // Create the Express application instance
 export const app: Application = express();
 
+// Enable CORS with predefined options - must be first to handle preflight requests
+app.use(cors(corsOptions));
+
 // Global middleware
 app.use(express.json()); // Parse incoming JSON payloads
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded payloads
@@ -17,9 +20,6 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
-
-// Enable CORS with predefined options
-app.use(cors(corsOptions));
 
 // Register main application routes
 app.use(router);

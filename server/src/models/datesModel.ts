@@ -3,17 +3,16 @@ import { IDates } from "../interfaces/IDates.js";
 
 const DatesSchema = new Schema<IDates>(
   {
+    id: { type: Number, required: true, unique: true },
     title: { type: String, required: true, trim: true },
-    notes: { type: String, required: true, trim: true },
+    notes: { type: String, default: "", trim: true },
     category: { type: String, required: true, trim: true },
     icon_path: { type: String, default: "" },
+    image_path: { type: String, default: "" },
+    done: { type: Boolean, default: false },
+    date_realised: { type: Date, default: null },
   },
   { timestamps: true },
 );
 
-DatesSchema.virtual("title").get(function (this: IDates) {
-  const formattedTitle = this.title.charAt(0).toUpperCase() + this.title.slice(1).toLowerCase();
-  return `${this.title} ${formattedTitle}`;
-});
-
-export const Dates = model<IDates>("User", DatesSchema);
+export const Dates = model<IDates>("Dates", DatesSchema);

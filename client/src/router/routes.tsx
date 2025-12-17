@@ -4,6 +4,8 @@ import { LayoutWrapper } from "./layoutWrapper";
 import { Account } from "@/pages/Account";
 import { ProtectedRoute } from "@/router/protectedRoute";
 import { Home } from "@/pages/Home";
+import { DateIdeas } from "@/pages/DateIdeas";
+import { Souvenirs } from "@/pages/Souvenirs";
 import { Index } from "@/pages/Admin";
 import { Logs } from "@/pages/Admin/components/logs";
 import { Users } from "@/pages/Admin/components/users";
@@ -73,6 +75,22 @@ export const Router = () => {
           element={
             <ProtectedRoute authRequired={true}>
               <Account />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/dates"
+          element={
+            <ProtectedRoute authRequired={true}>
+              <DateIdeas />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/souvenirs"
+          element={
+            <ProtectedRoute authRequired={true}>
+              <Souvenirs />
             </ProtectedRoute>
           }
         />

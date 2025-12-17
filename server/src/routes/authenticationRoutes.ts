@@ -3,6 +3,10 @@ import { getConnectedUser, login, logout, register, signInWithGoogle } from "../
 import { verifyToken } from "../middlewares/verifyToken.js";
 
 export const authRouter: Router = express.Router();
+
+// Ensure body is parsed for this router
+authRouter.use(express.json());
+
 /**
  * @route POST /login
  * @description Authenticates a user with their credentials (e.g., email and password).
