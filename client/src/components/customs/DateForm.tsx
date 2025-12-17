@@ -14,6 +14,7 @@ import { useTranslation } from "react-i18next";
 import { DateInterface } from "@/interfaces/Dates";
 import { CategoryInterface } from "@/interfaces/Category";
 import { Plus, X } from "lucide-react";
+import { ImageUploader } from "./ImageUploader";
 
 interface DateFormProps {
     open: boolean;
@@ -22,6 +23,7 @@ interface DateFormProps {
     categories: CategoryInterface[];
     onSubmit: (data: { title: string; notes: string; category: string }) => void;
     onCreateCategory?: (data: { name: string; color: string }) => Promise<void>;
+    onImagesChange?: (images: string[]) => void;
 }
 
 const COLOR_PRESETS = [
@@ -29,7 +31,7 @@ const COLOR_PRESETS = [
     "#06b6d4", "#3b82f6", "#8b5cf6", "#ef4444"
 ];
 
-export const DateForm = ({ open, onOpenChange, date, categories, onSubmit, onCreateCategory }: DateFormProps) => {
+export const DateForm = ({ open, onOpenChange, date, categories, onSubmit, onCreateCategory, onImagesChange }: DateFormProps) => {
     const { t } = useTranslation();
     const [title, setTitle] = useState("");
     const [notes, setNotes] = useState("");
@@ -197,6 +199,15 @@ export const DateForm = ({ open, onOpenChange, date, categories, onSubmit, onCre
                             </Select>
                         )}
                     </div>
+
+                    {/* Image uploader - only for existing dates */}
+                    {date && onImagesChange && (
+                        <ImageUploader
+                            dateId={date._id}
+                            images={date.images || []}
+                            onImagesChange={onImagesChange}
+                        />
+                    )}
 
                     <DialogFooter>
                         <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>

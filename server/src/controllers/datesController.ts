@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { Dates } from "../models/datesModel.js";
 import { createLog } from "./logController.js";
 import { logLevels } from "../utils/enums/logLevels.js";
+import fs from "fs";
+import path from "path";
 
 /**
  * @function getDates
@@ -57,7 +59,7 @@ export const getDates = async (req: Request, res: Response): Promise<void> => {
  * @description Creates a new date activity.
  */
 export const createDate = async (req: Request, res: Response): Promise<void> => {
-  const { title, notes, category, icon_path } = req.body;
+  const { title, notes, category } = req.body;
 
   if (!title || !category) {
     res.status(400).json({ error: "server.global.errors.missing_fields" });
@@ -65,19 +67,13 @@ export const createDate = async (req: Request, res: Response): Promise<void> => 
   }
 
   try {
-    // Get the highest id to increment
-    const highestId = await Dates.findOne().sort({ id: -1 });
-    const nextId = highestId ? highestId.id + 1 : 1;
-
     const date = await Dates.create({
-      id: nextId,
       title,
       category,
       notes: notes || "",
-      icon_path: icon_path || "",
       date_realised: null,
       done: false,
-      image_path: ""
+      images: []
     });
 
     createLog({
@@ -100,8 +96,8 @@ export const updateDate = async (req: Request, res: Response): Promise<void> => 
   const { id } = req.params;
 
   try {
-    const date = await Dates.findOneAndUpdate(
-      { id: parseInt(id) },
+    const date = await Dates.findByIdAndUpdate(
+      id,
       { ...req.body },
       { new: true }
     );
@@ -140,8 +136,8 @@ export const toggleDateDone = async (req: Request, res: Response): Promise<void>
       updateData.date_realised = null;
     }
 
-    const date = await Dates.findOneAndUpdate(
-      { id: parseInt(id) },
+    const date = await Dates.findByIdAndUpdate(
+      id,
       updateData,
       { new: true }
     );
@@ -170,11 +166,24 @@ export const toggleDateDone = async (req: Request, res: Response): Promise<void>
 export const deleteDate = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
-    const date = await Dates.findOneAndDelete({ id: parseInt(id) });
+    const date = await Dates.findByIdAndDelete(id);
 
     if (!date) {
       res.status(404).json({ error: "server.dates.errors.not_found" });
       return;
+    }
+
+    // Delete associated images
+    if (date.images && date.images.length > 0) {
+      date.images.forEach(imageUrl => {
+        const filename = imageUrl.split("/").pop();
+        if (filename) {
+          const filePath = path.join(process.cwd(), "uploads", "dates", filename);
+          if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+          }
+        }
+      });
     }
 
     createLog({
@@ -184,6 +193,103 @@ export const deleteDate = async (req: Request, res: Response): Promise<void> => 
     });
 
     res.status(200).json({ message: "server.dates.messages.deleted" });
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+/**
+ * @function uploadDateImages
+ * @description Uploads images for a date.
+ */
+export const uploadDateImages = async (req: Request, res: Response): Promise<void> => {
+  const { id } = req.params;
+  const files = req.files as Express.Multer.File[];
+
+  if (!files || files.length === 0) {
+    res.status(400).json({ error: "server.upload.errors.no_files" });
+    return;
+  }
+
+  try {
+    const date = await Dates.findById(id);
+
+    if (!date) {
+      // Delete uploaded files if date not found
+      files.forEach(file => fs.unlinkSync(file.path));
+      res.status(404).json({ error: "server.dates.errors.not_found" });
+      return;
+    }
+
+    // Check max images limit
+    const currentCount = date.images?.length || 0;
+    if (currentCount + files.length > 5) {
+      files.forEach(file => fs.unlinkSync(file.path));
+      res.status(400).json({ error: "server.upload.errors.max_images" });
+      return;
+    }
+
+    // Build image URLs
+    const newImageUrls = files.map(file =>
+      `${req.protocol}://${req.get("host")}/uploads/dates/${file.filename}`
+    );
+
+    date.images = [...(date.images || []), ...newImageUrls];
+    await date.save();
+
+    createLog({
+      message: `${files.length} image(s) uploaded for date '${date.title}'`,
+      userId: req.userId,
+      level: logLevels.INFO,
+    });
+
+    res.status(200).json({ images: date.images, message: "server.upload.messages.images_success" });
+  } catch (err: any) {
+    files.forEach(file => {
+      if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
+    });
+    res.status(500).json({ error: err.message });
+  }
+};
+
+/**
+ * @function deleteDateImage
+ * @description Deletes a specific image from a date.
+ */
+export const deleteDateImage = async (req: Request, res: Response): Promise<void> => {
+  const { id, filename } = req.params;
+
+  try {
+    const date = await Dates.findById(id);
+
+    if (!date) {
+      res.status(404).json({ error: "server.dates.errors.not_found" });
+      return;
+    }
+
+    const imageUrl = date.images?.find(img => img.includes(filename));
+    if (!imageUrl) {
+      res.status(404).json({ error: "server.upload.errors.image_not_found" });
+      return;
+    }
+
+    // Remove from database
+    date.images = date.images.filter(img => !img.includes(filename));
+    await date.save();
+
+    // Delete file from disk
+    const filePath = path.join(process.cwd(), "uploads", "dates", filename);
+    if (fs.existsSync(filePath)) {
+      fs.unlinkSync(filePath);
+    }
+
+    createLog({
+      message: `Image '${filename}' deleted from date '${date.title}'`,
+      userId: req.userId,
+      level: logLevels.INFO,
+    });
+
+    res.status(200).json({ images: date.images, message: "server.upload.messages.image_deleted" });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
   }

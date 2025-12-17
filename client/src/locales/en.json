@@ -319,7 +319,19 @@
   },
   "categories": {
     "messages": {
-      "created": "Category created successfully"
+      "created": "Category created successfully",
+      "updated": "Category updated successfully",
+      "deleted": "Category deleted"
+    },
+    "errors": {
+      "cannot_delete_default": "Default categories cannot be deleted"
+    },
+    "manage": {
+      "title": "Manage categories",
+      "button": "Categories",
+      "add": "Add category",
+      "name_placeholder": "Category name",
+      "default": "Default"
     }
   },
   "dates": {
@@ -379,6 +391,16 @@
       "title": "No date ideas yet",
       "action": "Create your first idea",
       "no_results": "No results found"
+    },
+    "images": {
+      "title": "Photo memories",
+      "add": "Add photos",
+      "hint": "JPG, PNG, GIF, WebP (max 3MB)",
+      "max_limit": "Maximum 5 images per date",
+      "upload_success": "Photo(s) uploaded successfully",
+      "upload_error": "Upload failed",
+      "delete_success": "Photo deleted",
+      "delete_error": "Delete failed"
     }
   },
   "server": {

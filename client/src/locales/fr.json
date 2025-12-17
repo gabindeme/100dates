@@ -319,7 +319,19 @@
   },
   "categories": {
     "messages": {
-      "created": "Catégorie créée avec succès"
+      "created": "Catégorie créée avec succès",
+      "updated": "Catégorie modifiée avec succès",
+      "deleted": "Catégorie supprimée"
+    },
+    "errors": {
+      "cannot_delete_default": "Les catégories par défaut ne peuvent pas être supprimées"
+    },
+    "manage": {
+      "title": "Gérer les catégories",
+      "button": "Catégories",
+      "add": "Ajouter une catégorie",
+      "name_placeholder": "Nom de la catégorie",
+      "default": "Par défaut"
     }
   },
   "dates": {
@@ -379,6 +391,16 @@
       "title": "Aucune idée de date pour le moment",
       "action": "Créer votre première idée",
       "no_results": "Aucun résultat trouvé"
+    },
+    "images": {
+      "title": "Photos souvenirs",
+      "add": "Ajouter des photos",
+      "hint": "JPG, PNG, GIF, WebP (max 3MB)",
+      "max_limit": "Maximum 5 images par date",
+      "upload_success": "Photo(s) ajoutée(s) avec succès",
+      "upload_error": "Échec du téléchargement",
+      "delete_success": "Photo supprimée",
+      "delete_error": "Échec de la suppression"
     }
   },
   "server": {

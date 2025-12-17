@@ -8,8 +8,9 @@ import { DateCard } from "@/components/customs/DateCard";
 import { FilterBar } from "@/components/customs/FilterBar";
 import { DateForm } from "@/components/customs/DateForm";
 import { CompletionDialog } from "@/components/customs/CompletionDialog";
+import { CategoryManager } from "@/components/customs/CategoryManager";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Plus, Settings } from "lucide-react";
 
 export const DateIdeas = () => {
     const { t } = useTranslation();
@@ -28,6 +29,7 @@ export const DateIdeas = () => {
     // Dialogs
     const [formOpen, setFormOpen] = useState(false);
     const [completionOpen, setCompletionOpen] = useState(false);
+    const [categoryManagerOpen, setCategoryManagerOpen] = useState(false);
     const [selectedDate, setSelectedDate] = useState<DateInterface | null>(null);
 
     const fetchCategories = async () => {
@@ -123,7 +125,7 @@ export const DateIdeas = () => {
 
     const handleComplete = async (date: DateInterface, realisationDate: string) => {
         try {
-            await axiosConfig.patch(`/dates/${date.id}/toggle`, {
+            await axiosConfig.patch(`/dates/${date._id}/toggle`, {
                 done: true,
                 date_realised: realisationDate,
             });
@@ -136,7 +138,7 @@ export const DateIdeas = () => {
 
     const handleUndoComplete = async (date: DateInterface) => {
         try {
-            await axiosConfig.patch(`/dates/${date.id}/toggle`, { done: false });
+            await axiosConfig.patch(`/dates/${date._id}/toggle`, { done: false });
             toast.success(t("dates.messages.marked_pending"));
             fetchDates();
         } catch (error: any) {
@@ -151,7 +153,7 @@ export const DateIdeas = () => {
 
     const handleDelete = async (date: DateInterface) => {
         try {
-            await axiosConfig.delete(`/dates/${date.id}`);
+            await axiosConfig.delete(`/dates/${date._id}`);
             toast.success(t("dates.messages.deleted"));
             fetchDates();
         } catch (error: any) {
@@ -167,7 +169,7 @@ export const DateIdeas = () => {
     const handleFormSubmit = async (data: { title: string; notes: string; category: string }) => {
         try {
             if (selectedDate) {
-                await axiosConfig.put(`/dates/${selectedDate.id}`, data);
+                await axiosConfig.put(`/dates/${selectedDate._id}`, data);
                 toast.success(t("dates.messages.updated"));
             } else {
                 await axiosConfig.post("/dates", data);
@@ -200,7 +202,7 @@ export const DateIdeas = () => {
     }
 
     return (
-        <div className="container mx-auto p-4 max-w-7xl">
+        <div className="container mx-auto p-4 pb-24 max-w-7xl">
             <div className="flex items-center justify-between mb-6">
                 <div>
                     <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
@@ -210,10 +212,16 @@ export const DateIdeas = () => {
                         {filteredDates.length} / {allDates.length} {t("dates.filters.results")}
                     </p>
                 </div>
-                <Button onClick={handleCreate} className="gap-2">
-                    <Plus className="h-4 w-4" />
-                    {t("dates.actions.add")}
-                </Button>
+                <div className="flex gap-2">
+                    <Button variant="outline" onClick={() => setCategoryManagerOpen(true)} className="gap-2">
+                        <Settings className="h-4 w-4" />
+                        {t("categories.manage.button")}
+                    </Button>
+                    <Button onClick={handleCreate} className="gap-2">
+                        <Plus className="h-4 w-4" />
+                        {t("dates.actions.add")}
+                    </Button>
+                </div>
             </div>
 
             <FilterBar
@@ -262,6 +270,14 @@ export const DateIdeas = () => {
                 categories={categories}
                 onSubmit={handleFormSubmit}
                 onCreateCategory={handleCreateCategory}
+                onImagesChange={(images) => {
+                    if (selectedDate) {
+                        setSelectedDate({ ...selectedDate, images });
+                        setAllDates(prev => prev.map(d =>
+                            d._id === selectedDate._id ? { ...d, images } : d
+                        ));
+                    }
+                }}
             />
 
             <CompletionDialog
@@ -269,6 +285,13 @@ export const DateIdeas = () => {
                 onOpenChange={setCompletionOpen}
                 date={selectedDate}
                 onConfirm={handleComplete}
+            />
+
+            <CategoryManager
+                open={categoryManagerOpen}
+                onOpenChange={setCategoryManagerOpen}
+                categories={categories}
+                onCategoriesChange={fetchCategories}
             />
         </div>
     );

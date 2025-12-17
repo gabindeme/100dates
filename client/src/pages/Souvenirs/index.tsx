@@ -4,7 +4,7 @@ import { DateInterface } from "@/interfaces/Dates";
 import { CategoryInterface } from "@/interfaces/Category";
 import { axiosConfig } from "@/config/axiosConfig";
 import { toast } from "sonner";
-import { Heart, Calendar, Quote } from "lucide-react";
+import { Heart, Calendar, Quote, X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export const Souvenirs = () => {
     const { t } = useTranslation();
@@ -13,6 +13,11 @@ export const Souvenirs = () => {
     const [loading, setLoading] = useState(true);
     const [visibleItems, setVisibleItems] = useState<Set<string>>(new Set());
     const observerRef = useRef<IntersectionObserver | null>(null);
+
+    // Lightbox state
+    const [lightboxOpen, setLightboxOpen] = useState(false);
+    const [lightboxImages, setLightboxImages] = useState<string[]>([]);
+    const [lightboxIndex, setLightboxIndex] = useState(0);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -87,6 +92,38 @@ export const Souvenirs = () => {
         if (diffDays < 365) return t("souvenirs.months_ago", { count: Math.floor(diffDays / 30) });
         return t("souvenirs.years_ago", { count: Math.floor(diffDays / 365) });
     };
+
+    const openLightbox = (images: string[], startIndex: number) => {
+        setLightboxImages(images);
+        setLightboxIndex(startIndex);
+        setLightboxOpen(true);
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeLightbox = () => {
+        setLightboxOpen(false);
+        document.body.style.overflow = 'auto';
+    };
+
+    const nextImage = () => {
+        setLightboxIndex((prev) => (prev + 1) % lightboxImages.length);
+    };
+
+    const prevImage = () => {
+        setLightboxIndex((prev) => (prev - 1 + lightboxImages.length) % lightboxImages.length);
+    };
+
+    // Keyboard navigation
+    useEffect(() => {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (!lightboxOpen) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowRight') nextImage();
+            if (e.key === 'ArrowLeft') prevImage();
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [lightboxOpen, lightboxImages.length]);
 
     if (loading) {
         return <div className="flex justify-center p-8">{t("common.loading")}</div>;
@@ -181,6 +218,27 @@ export const Souvenirs = () => {
                                                 <p className="text-sm italic text-muted-foreground">{date.notes}</p>
                                             </div>
                                         )}
+
+                                        {/* Images gallery */}
+                                        {date.images && date.images.length > 0 && (
+                                            <div className={`grid gap-2 mt-3 ${date.images.length === 1 ? 'grid-cols-1' :
+                                                date.images.length === 2 ? 'grid-cols-2' : 'grid-cols-3'
+                                                }`}>
+                                                {date.images.map((img, idx) => (
+                                                    <div
+                                                        key={idx}
+                                                        className="aspect-square rounded-lg overflow-hidden cursor-pointer hover:opacity-90 transition-opacity"
+                                                        onClick={() => openLightbox(date.images, idx)}
+                                                    >
+                                                        <img
+                                                            src={img}
+                                                            alt=""
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
@@ -197,6 +255,60 @@ export const Souvenirs = () => {
             )}
 
             <div className="h-16" /> {/* Bottom spacing */}
+
+            {/* Lightbox Modal */}
+            {lightboxOpen && (
+                <div
+                    className="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm flex items-center justify-center animate-in fade-in duration-200"
+                    onClick={closeLightbox}
+                >
+                    {/* Close button */}
+                    <button
+                        onClick={closeLightbox}
+                        className="absolute top-6 right-6 p-2 text-white/60 hover:text-white transition-all hover:scale-110 z-10"
+                    >
+                        <X className="h-7 w-7" />
+                    </button>
+
+                    {/* Counter */}
+                    <div className="absolute top-6 left-6 text-white/60 text-sm font-medium">
+                        {lightboxIndex + 1} / {lightboxImages.length}
+                    </div>
+
+                    {/* Previous button */}
+                    {lightboxImages.length > 1 && (
+                        <button
+                            onClick={(e) => { e.stopPropagation(); prevImage(); }}
+                            className="absolute left-4 md:left-8 p-3 text-white/60 hover:text-white transition-all hover:scale-110 bg-white/10 hover:bg-white/20 rounded-full"
+                        >
+                            <ChevronLeft className="h-8 w-8" />
+                        </button>
+                    )}
+
+                    {/* Image container with animation */}
+                    <div
+                        key={lightboxIndex}
+                        className="animate-in fade-in zoom-in-95 duration-300"
+                    >
+                        <img
+                            src={lightboxImages[lightboxIndex]}
+                            alt=""
+                            className="max-h-[85vh] max-w-[85vw] object-contain rounded-lg shadow-2xl"
+                            onClick={(e) => e.stopPropagation()}
+                        />
+                    </div>
+
+                    {/* Next button */}
+                    {lightboxImages.length > 1 && (
+                        <button
+                            onClick={(e) => { e.stopPropagation(); nextImage(); }}
+                            className="absolute right-4 md:right-8 p-3 text-white/60 hover:text-white transition-all hover:scale-110 bg-white/10 hover:bg-white/20 rounded-full"
+                        >
+                            <ChevronRight className="h-8 w-8" />
+                        </button>
+                    )}
+                </div>
+            )}
         </div>
     );
 };

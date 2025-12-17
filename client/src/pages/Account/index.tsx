@@ -96,7 +96,7 @@ export const Account = () => {
   return loading ? (
     <Loading />
   ) : (
-    <div className="flex justify-center p-8">
+    <div className="flex justify-center p-8 pb-24">
       <Card className="w-full max-w-4xl p-4 shadow-xl rounded-2xl">
         <CardHeader className="flex flex-row items-center justify-between ">
           <div>
