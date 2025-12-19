@@ -19,8 +19,8 @@ export const getDates = async (req: Request, res: Response): Promise<void> => {
   const sortOrder = req.query.sortOrder === "asc" ? 1 : -1;
 
   try {
-    // Build filter object
-    const filter: any = {};
+    // Build filter object - always filter by current user's ID
+    const filter: any = { userId: req.userId };
 
     if (category && category !== "all") {
       filter.category = category;
@@ -68,6 +68,7 @@ export const createDate = async (req: Request, res: Response): Promise<void> => 
 
   try {
     const date = await Dates.create({
+      userId: req.userId,
       title,
       category,
       notes: notes || "",
@@ -96,19 +97,21 @@ export const updateDate = async (req: Request, res: Response): Promise<void> => 
   const { id } = req.params;
 
   try {
+    // First verify the date belongs to the current user
+    const existingDate = await Dates.findOne({ _id: id, userId: req.userId });
+    if (!existingDate) {
+      res.status(404).json({ error: "server.dates.errors.not_found" });
+      return;
+    }
+
     const date = await Dates.findByIdAndUpdate(
       id,
       { ...req.body },
       { new: true }
     );
 
-    if (!date) {
-      res.status(404).json({ error: "server.dates.errors.not_found" });
-      return;
-    }
-
     createLog({
-      message: `Date '${date.title}' updated successfully`,
+      message: `Date '${date!.title}' updated successfully`,
       userId: req.userId,
       level: logLevels.INFO,
     });
@@ -128,6 +131,13 @@ export const toggleDateDone = async (req: Request, res: Response): Promise<void>
   const { done, date_realised } = req.body;
 
   try {
+    // First verify the date belongs to the current user
+    const existingDate = await Dates.findOne({ _id: id, userId: req.userId });
+    if (!existingDate) {
+      res.status(404).json({ error: "server.dates.errors.not_found" });
+      return;
+    }
+
     const updateData: any = { done };
 
     if (done === true) {
@@ -142,13 +152,8 @@ export const toggleDateDone = async (req: Request, res: Response): Promise<void>
       { new: true }
     );
 
-    if (!date) {
-      res.status(404).json({ error: "server.dates.errors.not_found" });
-      return;
-    }
-
     createLog({
-      message: `Date '${date.title}' marked as ${done ? "done" : "not done"}`,
+      message: `Date '${date!.title}' marked as ${done ? "done" : "not done"}`,
       userId: req.userId,
       level: logLevels.INFO,
     });
@@ -166,15 +171,17 @@ export const toggleDateDone = async (req: Request, res: Response): Promise<void>
 export const deleteDate = async (req: Request, res: Response): Promise<void> => {
   const { id } = req.params;
   try {
-    const date = await Dates.findByIdAndDelete(id);
-
-    if (!date) {
+    // First verify the date belongs to the current user
+    const existingDate = await Dates.findOne({ _id: id, userId: req.userId });
+    if (!existingDate) {
       res.status(404).json({ error: "server.dates.errors.not_found" });
       return;
     }
 
+    const date = await Dates.findByIdAndDelete(id);
+
     // Delete associated images
-    if (date.images && date.images.length > 0) {
+    if (date && date.images && date.images.length > 0) {
       date.images.forEach(imageUrl => {
         const filename = imageUrl.split("/").pop();
         if (filename) {
@@ -187,7 +194,7 @@ export const deleteDate = async (req: Request, res: Response): Promise<void> => 
     }
 
     createLog({
-      message: `Date '${date.title}' deleted successfully`,
+      message: `Date '${date!.title}' deleted successfully`,
       userId: req.userId,
       level: logLevels.INFO,
     });
@@ -212,10 +219,11 @@ export const uploadDateImages = async (req: Request, res: Response): Promise<voi
   }
 
   try {
-    const date = await Dates.findById(id);
+    // Verify the date belongs to the current user
+    const date = await Dates.findOne({ _id: id, userId: req.userId });
 
     if (!date) {
-      // Delete uploaded files if date not found
+      // Delete uploaded files if date not found or doesn't belong to user
       files.forEach(file => fs.unlinkSync(file.path));
       res.status(404).json({ error: "server.dates.errors.not_found" });
       return;
@@ -260,7 +268,8 @@ export const deleteDateImage = async (req: Request, res: Response): Promise<void
   const { id, filename } = req.params;
 
   try {
-    const date = await Dates.findById(id);
+    // Verify the date belongs to the current user
+    const date = await Dates.findOne({ _id: id, userId: req.userId });
 
     if (!date) {
       res.status(404).json({ error: "server.dates.errors.not_found" });

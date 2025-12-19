@@ -3,6 +3,7 @@ import { IDates } from "../interfaces/IDates.js";
 
 const DatesSchema = new Schema<IDates>(
   {
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     title: { type: String, required: true, trim: true },
     notes: { type: String, default: "", trim: true },
     category: { type: String, required: true, trim: true },
