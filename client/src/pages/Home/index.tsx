@@ -91,7 +91,7 @@ export const Home = () => {
     <div className="container mx-auto p-4 pb-24 max-w-7xl">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-sidebar-accent-foreground to-pink-300 bg-clip-text text-transparent">
             {t("pages.home.dashboard_title")}
           </h1>
           <p className="text-muted-foreground mt-1">{t("pages.home.dashboard_subtitle")}</p>
