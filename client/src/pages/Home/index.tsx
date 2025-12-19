@@ -89,7 +89,7 @@ export const Home = () => {
 
   return (
     <div className="container mx-auto p-4 pb-24 max-w-7xl">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
         <div>
           <h1 className="text-3xl font-bold bg-gradient-to-r from-sidebar-accent-foreground to-pink-300 bg-clip-text text-transparent">
             {t("pages.home.dashboard_title")}
@@ -97,7 +97,7 @@ export const Home = () => {
           <p className="text-muted-foreground mt-1">{t("pages.home.dashboard_subtitle")}</p>
         </div>
         <Link to="/dates">
-          <Button className="gap-2">
+          <Button className="gap-2 w-full sm:w-auto">
             {t("pages.home.view_all")}
             <ArrowRight className="h-4 w-4" />
           </Button>

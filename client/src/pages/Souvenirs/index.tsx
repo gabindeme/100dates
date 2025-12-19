@@ -132,7 +132,7 @@ export const Souvenirs = () => {
     return (
         <div className="container mx-auto p-4 max-w-4xl">
             <div className="text-center mb-12">
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent mb-2">
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-sidebar-accent-foreground to-pink-300 bg-clip-text text-transparent mb-2">
                     {t("pages.souvenirs.title")}
                 </h1>
                 <p className="text-muted-foreground">{t("pages.souvenirs.subtitle")}</p>

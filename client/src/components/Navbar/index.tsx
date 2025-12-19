@@ -142,7 +142,7 @@ export const Navbar = () => {
                         onClick={() => navigate(link.path)}
                         variant="ghost"
                         size="sm"
-                        className="rounded-full"
+                        className="rounded-full hover:bg-primary/10 hover:text-primary transition-colors"
                       >
                         <link.icon className="w-4 h-4 mr-1.5" />
                         {link.label}

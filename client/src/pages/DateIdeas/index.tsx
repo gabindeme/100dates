@@ -203,9 +203,9 @@ export const DateIdeas = () => {
 
     return (
         <div className="container mx-auto p-4 pb-24 max-w-7xl">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                 <div>
-                    <h1 className="text-3xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent">
+                    <h1 className="text-3xl font-bold bg-gradient-to-r from-sidebar-accent-foreground to-pink-300 bg-clip-text text-transparent">
                         {t("pages.dateIdeas.title")}
                     </h1>
                     <p className="text-sm text-muted-foreground mt-1">
@@ -213,11 +213,12 @@ export const DateIdeas = () => {
                     </p>
                 </div>
                 <div className="flex gap-2">
-                    <Button variant="outline" onClick={() => setCategoryManagerOpen(true)} className="gap-2">
+                    <Button variant="outline" onClick={() => setCategoryManagerOpen(true)} className="gap-2 flex-1 sm:flex-none">
                         <Settings className="h-4 w-4" />
-                        {t("categories.manage.button")}
+                        <span className="hidden sm:inline">{t("categories.manage.button")}</span>
+                        <span className="sm:hidden">{t("categories.manage.button") || t("categories.manage.button")}</span>
                     </Button>
-                    <Button onClick={handleCreate} className="gap-2">
+                    <Button onClick={handleCreate} className="gap-2 flex-1 sm:flex-none">
                         <Plus className="h-4 w-4" />
                         {t("dates.actions.add")}
                     </Button>

@@ -162,7 +162,7 @@ export const CategoryManager = ({ open, onOpenChange, categories, onCategoriesCh
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="sm:max-w-[500px] max-h-[80vh] overflow-y-auto">
+            <DialogContent className="w-[95vw] sm:max-w-[500px] max-h-[80vh] overflow-y-auto rounded-2xl">
                 <DialogHeader>
                     <DialogTitle>{t("categories.manage.title")}</DialogTitle>
                 </DialogHeader>
@@ -171,7 +171,7 @@ export const CategoryManager = ({ open, onOpenChange, categories, onCategoriesCh
                     {categories.map((cat) => (
                         <div
                             key={cat._id}
-                            className="flex items-center gap-3 p-3 rounded-lg border bg-card"
+                            className="flex flex-wrap items-center gap-2 sm:gap-3 p-3 rounded-lg border bg-card"
                         >
                             {editingId === cat._id ? (
                                 // Edit mode
@@ -180,30 +180,32 @@ export const CategoryManager = ({ open, onOpenChange, categories, onCategoriesCh
                                     <Input
                                         value={editName}
                                         onChange={(e) => setEditName(e.target.value)}
-                                        className="flex-1 h-9"
+                                        className="flex-1 min-w-[120px] h-9"
                                         autoFocus
                                     />
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="h-9 w-9"
-                                        onClick={() => handleUpdate(cat._id)}
-                                        disabled={loading === cat._id}
-                                    >
-                                        {loading === cat._id ? (
-                                            <Loader2 className="h-4 w-4 animate-spin" />
-                                        ) : (
-                                            <Check className="h-4 w-4 text-green-500" />
-                                        )}
-                                    </Button>
-                                    <Button
-                                        variant="ghost"
-                                        size="icon"
-                                        className="h-9 w-9"
-                                        onClick={cancelEdit}
-                                    >
-                                        <X className="h-4 w-4" />
-                                    </Button>
+                                    <div className="flex gap-1">
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-9 w-9"
+                                            onClick={() => handleUpdate(cat._id)}
+                                            disabled={loading === cat._id}
+                                        >
+                                            {loading === cat._id ? (
+                                                <Loader2 className="h-4 w-4 animate-spin" />
+                                            ) : (
+                                                <Check className="h-4 w-4 text-green-500" />
+                                            )}
+                                        </Button>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            className="h-9 w-9"
+                                            onClick={cancelEdit}
+                                        >
+                                            <X className="h-4 w-4" />
+                                        </Button>
+                                    </div>
                                 </>
                             ) : (
                                 // Display mode
@@ -248,36 +250,38 @@ export const CategoryManager = ({ open, onOpenChange, categories, onCategoriesCh
 
                     {/* New category form */}
                     {showNew ? (
-                        <div className="flex items-center gap-3 p-3 rounded-lg border border-dashed border-primary/50 bg-primary/5">
+                        <div className="flex flex-wrap items-center gap-2 sm:gap-3 p-3 rounded-lg border border-dashed border-primary/50 bg-primary/5">
                             <ColorPicker color={newColor} onChange={setNewColor} />
                             <Input
                                 value={newName}
                                 onChange={(e) => setNewName(e.target.value)}
                                 placeholder={t("categories.manage.name_placeholder")}
-                                className="flex-1 h-9"
+                                className="flex-1 min-w-[120px] h-9"
                                 autoFocus
                             />
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-9 w-9"
-                                onClick={handleCreate}
-                                disabled={loading === "new" || !newName.trim()}
-                            >
-                                {loading === "new" ? (
-                                    <Loader2 className="h-4 w-4 animate-spin" />
-                                ) : (
-                                    <Check className="h-4 w-4 text-green-500" />
-                                )}
-                            </Button>
-                            <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-9 w-9"
-                                onClick={() => { setShowNew(false); setNewName(""); }}
-                            >
-                                <X className="h-4 w-4" />
-                            </Button>
+                            <div className="flex gap-1">
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-9 w-9"
+                                    onClick={handleCreate}
+                                    disabled={loading === "new" || !newName.trim()}
+                                >
+                                    {loading === "new" ? (
+                                        <Loader2 className="h-4 w-4 animate-spin" />
+                                    ) : (
+                                        <Check className="h-4 w-4 text-green-500" />
+                                    )}
+                                </Button>
+                                <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-9 w-9"
+                                    onClick={() => { setShowNew(false); setNewName(""); }}
+                                >
+                                    <X className="h-4 w-4" />
+                                </Button>
+                            </div>
                         </div>
                     ) : (
                         <Button
