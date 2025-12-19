@@ -66,8 +66,8 @@ export const Login = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-svh gap-6 px-2 py-4 md:px-10 md:py-10">
-      <div className="flex items-center self-center gap-2 text-3xl font-medium sm:text-4xl text-accent">{configValues["APP_NAME"]}</div>
-      <div className="flex flex-col w-full max-w-md gap-6 bg-background p-4 md:p-8 lg:rounded-2xl lg:shadow">
+      <div className="flex items-center self-center gap-2 text-3xl font-bold sm:text-4xl text-accent">{configValues["APP_NAME"]}</div>
+      <div className="flex flex-col w-full max-w-md gap-6 bg-background p-4 md:p-8 lg:rounded-2xl lg:shadow-xl">
         <div className="text-center">
           <h1 className="text-xl md:text-2xl font-semibold">{t("pages.login.welcome_back")}</h1>
         </div>

@@ -254,7 +254,7 @@ export const Navbar = () => {
           )}
           <Separator className="my-2" />
           <div className="flex items-center justify-center gap-4 pt-2">
-            <LanguageChanger />
+            <LanguageChanger isMobile />
             <ThemeChanger />
           </div>
         </div>

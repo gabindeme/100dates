@@ -13,7 +13,11 @@ import { getFullNamesOfLocales, listOfLocales } from "@/lib/i18n";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 
-export const LanguageChanger = () => {
+interface LanguageChangerProps {
+  isMobile?: boolean;
+}
+
+export const LanguageChanger = ({ isMobile = false }: LanguageChangerProps) => {
   const {
     i18n: { changeLanguage, language, t },
   } = useTranslation();
@@ -24,25 +28,45 @@ export const LanguageChanger = () => {
     toast.success(t("navbar.languageChanged"));
   };
 
+  // Mobile version: simple buttons with flags only
+  if (isMobile) {
+    return (
+      <div className="flex gap-2">
+        {listOfLocales.map((l) => (
+          <Button
+            key={l}
+            variant={language === l ? "default" : "outline"}
+            size="icon"
+            onClick={() => handleChangeLanguage(l)}
+            className="min-h-[44px] min-w-[44px]"
+          >
+            {l === "fr" && <FR className="w-6 h-4" />}
+            {l === "en" && <GB className="w-6 h-4" />}
+          </Button>
+        ))}
+      </div>
+    );
+  }
+
+  // Desktop version: dropdown
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild className="cursor-pointer text-primary">
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" className="min-h-[44px] min-w-[44px]">
           <Globe className="w-5 h-5" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-40">
+      <DropdownMenuContent className="w-40" align="center" sideOffset={8}>
         <DropdownMenuLabel>{t("navbar.language")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {listOfLocales.map((l) => (
           <DropdownMenuItem
             key={l}
-            onClick={() => handleChangeLanguage(l)}
-            className={` cursor-pointer flex items-center ${language === l ? "bg-secondary" : ""}`}
+            onSelect={() => handleChangeLanguage(l)}
+            className={`cursor-pointer flex items-center gap-2 min-h-[44px] ${language === l ? "bg-secondary" : ""}`}
           >
-            {l === "fr" && <FR />}
-            {l === "en" && <GB />}
-
+            {l === "fr" && <FR className="w-6 h-4" />}
+            {l === "en" && <GB className="w-6 h-4" />}
             {getFullNamesOfLocales(l)}
           </DropdownMenuItem>
         ))}
