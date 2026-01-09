@@ -31,7 +31,15 @@
       "title": "Our Memories",
       "subtitle": "Moments we've shared together",
       "memories": "memories",
-      "empty": "No memories yet. Mark some dates as completed!"
+      "empty": "No memories yet. Mark some dates as completed!",
+      "filters": {
+        "all_time": "All time",
+        "year": "Year",
+        "month": "Month",
+        "all_months": "All months",
+        "showing": "Showing",
+        "of": "of"
+      }
     },
     "account": {
       "errors": {

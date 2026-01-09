@@ -31,7 +31,15 @@
       "title": "Nos Souvenirs",
       "subtitle": "Les moments qu'on a partagés ensemble",
       "memories": "souvenirs",
-      "empty": "Aucun souvenir pour le moment. Marquez des dates comme réalisées !"
+      "empty": "Aucun souvenir pour le moment. Marquez des dates comme réalisées !",
+      "filters": {
+        "all_time": "Tout",
+        "year": "Année",
+        "month": "Mois",
+        "all_months": "Tous les mois",
+        "showing": "Affichage de",
+        "of": "sur"
+      }
     },
     "account": {
       "errors": {

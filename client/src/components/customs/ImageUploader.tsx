@@ -80,6 +80,7 @@ export const ImageUploader = ({ dateId, images, onImagesChange }: ImageUploaderP
                             <img
                                 src={imageUrl}
                                 alt=""
+                                loading="lazy"
                                 className="w-full h-full object-cover"
                             />
                             <button
