@@ -31,14 +31,35 @@ export const LanguageChanger = () => {
     toast.success(t("navbar.languageChanged"));
   };
 
+  // Mobile version: simple buttons with flags only
+  if (isMobile) {
+    return (
+      <div className="flex gap-2">
+        {listOfLocales.map((l) => (
+          <Button
+            key={l}
+            variant={language === l ? "default" : "outline"}
+            size="icon"
+            onClick={() => handleChangeLanguage(l)}
+            className="min-h-[44px] min-w-[44px]"
+          >
+            {l === "fr" && <FR className="w-6 h-4" />}
+            {l === "en" && <GB className="w-6 h-4" />}
+          </Button>
+        ))}
+      </div>
+    );
+  }
+
+  // Desktop version: dropdown
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild className="cursor-pointer text-primary">
-        <Button variant="outline" size="sm">
+        <Button variant="outline" size="sm" className="min-h-[44px] min-w-[44px]">
           <Globe className="w-5 h-5" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-40">
+      <DropdownMenuContent className="w-40" align="center" sideOffset={8}>
         <DropdownMenuLabel>{t("navbar.language")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {listOfLocales.map((l) => {

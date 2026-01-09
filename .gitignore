@@ -18,3 +18,7 @@ coverage
 
 # Variables locales
 .env
+
+# Specefic files
+dates.md
+dates-import.json

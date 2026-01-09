@@ -86,7 +86,7 @@ export const AnimatedHearts = () => {
             setTimeout(() => {
                 setExplosions([]);
                 setAnimatingParticles(new Set());
-            }, 700);
+            }, 1200);
 
             // Respawn heart after delay
             setTimeout(() => {
@@ -146,7 +146,7 @@ export const AnimatedHearts = () => {
                 return (
                     <Heart
                         key={particle.id}
-                        className="fixed pointer-events-none z-50 fill-current transition-all duration-500 ease-out"
+                        className="fixed pointer-events-none z-50 fill-current transition-all duration-1000 ease-out"
                         style={{
                             left: isAnimating ? particle.endX : particle.startX,
                             top: isAnimating ? particle.endY : particle.startY,
