@@ -12,6 +12,7 @@ import { Globe } from "lucide-react";
 import { getFullNamesOfLocales, listOfLocales } from "@/lib/i18n";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
+import { useIsMobile } from "@/hooks/useMobile";
 
 const flagComponents: { [key: string]: React.ComponentType<{ className?: string }> } = {
   en: GB,
@@ -24,6 +25,7 @@ export const LanguageChanger = () => {
   const {
     i18n: { changeLanguage, language, t },
   } = useTranslation();
+  const isMobile = useIsMobile();
 
   const handleChangeLanguage = (l: string) => {
     localStorage.setItem("i18nextLng", l);
@@ -35,18 +37,20 @@ export const LanguageChanger = () => {
   if (isMobile) {
     return (
       <div className="flex gap-2">
-        {listOfLocales.map((l) => (
-          <Button
-            key={l}
-            variant={language === l ? "default" : "outline"}
-            size="icon"
-            onClick={() => handleChangeLanguage(l)}
-            className="min-h-[44px] min-w-[44px]"
-          >
-            {l === "fr" && <FR className="w-6 h-4" />}
-            {l === "en" && <GB className="w-6 h-4" />}
-          </Button>
-        ))}
+        {listOfLocales.map((l) => {
+          const FlagIcon = flagComponents[l];
+          return (
+            <Button
+              key={l}
+              variant={language === l ? "default" : "outline"}
+              size="icon"
+              onClick={() => handleChangeLanguage(l)}
+              className="min-h-[44px] min-w-[44px]"
+            >
+              {FlagIcon && <FlagIcon className="w-6 h-4" />}
+            </Button>
+          );
+        })}
       </div>
     );
   }
