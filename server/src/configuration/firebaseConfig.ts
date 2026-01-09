@@ -1,22 +1,23 @@
-import * as admin from "firebase-admin";
+import admin from "firebase-admin";
 
 // Initialize Firebase Admin SDK
 // This uses environment variables for the service account credentials
 const initializeFirebase = () => {
-    if (admin.apps.length === 0) {
-        // Check if all required environment variables are present
-        if (
-            !process.env.FIREBASE_PROJECT_ID ||
-            !process.env.FIREBASE_CLIENT_EMAIL ||
-            !process.env.FIREBASE_PRIVATE_KEY ||
-            !process.env.FIREBASE_STORAGE_BUCKET
-        ) {
-            console.warn(
-                "Firebase Storage not configured. Image uploads will fail. Please set FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY, and FIREBASE_STORAGE_BUCKET environment variables."
-            );
-            return null;
-        }
+    // Check if all required environment variables are present
+    if (
+        !process.env.FIREBASE_PROJECT_ID ||
+        !process.env.FIREBASE_CLIENT_EMAIL ||
+        !process.env.FIREBASE_PRIVATE_KEY ||
+        !process.env.FIREBASE_STORAGE_BUCKET
+    ) {
+        console.warn(
+            "Firebase Storage not configured. Image uploads will fail. Please set FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY, and FIREBASE_STORAGE_BUCKET environment variables."
+        );
+        return null;
+    }
 
+    // Check if already initialized
+    if (admin.apps.length === 0) {
         admin.initializeApp({
             credential: admin.credential.cert({
                 projectId: process.env.FIREBASE_PROJECT_ID,
