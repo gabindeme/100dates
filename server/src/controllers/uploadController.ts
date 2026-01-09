@@ -1,8 +1,7 @@
 import { Request, Response } from "express";
-import fs from "fs";
-import path from "path";
 import { User } from "../models/userModel.js";
 import { Constants } from "../constants/constants.js";
+import { uploadToFirebase, deleteFromFirebase } from "../configuration/firebaseConfig.js";
 
 /**
  * @function updateUserAvatar
@@ -38,14 +37,14 @@ export const updateUserAvatar = async (req: Request, res: Response): Promise<voi
       return;
     }
 
-    if (user.avatar) {
-      const oldAvatarPath = path.join(process.cwd(), "uploads", "users", "avatars", path.basename(user.avatar));
-      if (fs.existsSync(oldAvatarPath)) {
-        fs.unlinkSync(oldAvatarPath);
-      }
+    // Delete old avatar from Firebase Storage if it exists
+    if (user.avatar && user.avatar.includes("storage.googleapis.com")) {
+      await deleteFromFirebase(user.avatar).catch(() => { });
     }
 
-    const newAvatarUrl = `${req.protocol}://${req.get("host")}/uploads/users/avatars/${req.file.filename}`;
+    // Upload new avatar to Firebase Storage
+    const filename = `avatar_${userId}_${Date.now()}_${req.file.originalname}`;
+    const newAvatarUrl = await uploadToFirebase(req.file.buffer, filename, req.file.mimetype, "avatars");
 
     user.avatar = newAvatarUrl;
     await user.save();

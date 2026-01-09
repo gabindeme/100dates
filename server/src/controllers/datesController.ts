@@ -2,8 +2,7 @@ import { Request, Response } from "express";
 import { Dates } from "../models/datesModel.js";
 import { createLog } from "./logController.js";
 import { logLevels } from "../utils/enums/logLevels.js";
-import fs from "fs";
-import path from "path";
+import { uploadToFirebase, deleteFromFirebase } from "../configuration/firebaseConfig.js";
 
 /**
  * @function getDates
@@ -180,17 +179,11 @@ export const deleteDate = async (req: Request, res: Response): Promise<void> => 
 
     const date = await Dates.findByIdAndDelete(id);
 
-    // Delete associated images
+    // Delete associated images from Firebase Storage
     if (date && date.images && date.images.length > 0) {
-      date.images.forEach(imageUrl => {
-        const filename = imageUrl.split("/").pop();
-        if (filename) {
-          const filePath = path.join(process.cwd(), "uploads", "dates", filename);
-          if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
-          }
-        }
-      });
+      await Promise.all(
+        date.images.map(imageUrl => deleteFromFirebase(imageUrl).catch(() => { }))
+      );
     }
 
     createLog({
@@ -223,8 +216,6 @@ export const uploadDateImages = async (req: Request, res: Response): Promise<voi
     const date = await Dates.findOne({ _id: id, userId: req.userId });
 
     if (!date) {
-      // Delete uploaded files if date not found or doesn't belong to user
-      files.forEach(file => fs.unlinkSync(file.path));
       res.status(404).json({ error: "server.dates.errors.not_found" });
       return;
     }
@@ -232,15 +223,17 @@ export const uploadDateImages = async (req: Request, res: Response): Promise<voi
     // Check max images limit
     const currentCount = date.images?.length || 0;
     if (currentCount + files.length > 5) {
-      files.forEach(file => fs.unlinkSync(file.path));
       res.status(400).json({ error: "server.upload.errors.max_images" });
       return;
     }
 
-    // Build image URLs
-    const newImageUrls = files.map(file =>
-      `${req.protocol}://${req.get("host")}/uploads/dates/${file.filename}`
-    );
+    // Upload images to Firebase Storage
+    const newImageUrls: string[] = [];
+    for (const file of files) {
+      const filename = `date_${id}_${Date.now()}_${file.originalname}`;
+      const url = await uploadToFirebase(file.buffer, filename, file.mimetype, "dates");
+      newImageUrls.push(url);
+    }
 
     date.images = [...(date.images || []), ...newImageUrls];
     await date.save();
@@ -253,9 +246,6 @@ export const uploadDateImages = async (req: Request, res: Response): Promise<voi
 
     res.status(200).json({ images: date.images, message: "server.upload.messages.images_success" });
   } catch (err: any) {
-    files.forEach(file => {
-      if (fs.existsSync(file.path)) fs.unlinkSync(file.path);
-    });
     res.status(500).json({ error: err.message });
   }
 };
@@ -286,11 +276,8 @@ export const deleteDateImage = async (req: Request, res: Response): Promise<void
     date.images = date.images.filter(img => !img.includes(filename));
     await date.save();
 
-    // Delete file from disk
-    const filePath = path.join(process.cwd(), "uploads", "dates", filename);
-    if (fs.existsSync(filePath)) {
-      fs.unlinkSync(filePath);
-    }
+    // Delete file from Firebase Storage
+    await deleteFromFirebase(imageUrl);
 
     createLog({
       message: `Image '${filename}' deleted from date '${date.title}'`,
