@@ -1,0 +1,475 @@
+{
+    "navbar": {
+        "home": "Inicio",
+        "dates": "Nuestras Citas",
+        "souvenirs": "Recuerdos",
+        "dashboard": "Panel",
+        "account": "Mi cuenta",
+        "login": "Iniciar sesión",
+        "language": "Idioma",
+        "languageChanged": "Idioma cambiado a español.",
+        "changingLanguage": "Cambiando idioma...",
+        "logout": "Cerrar sesión",
+        "profile": "Perfil"
+    },
+    "footer": {
+        "made_with": "Hecho con",
+        "by": "por"
+    },
+    "pages": {
+        "home": {
+            "title": "Nuestras Ideas de Citas",
+            "dashboard_title": "Panel",
+            "dashboard_subtitle": "Resumen de nuestras ideas de citas",
+            "view_all": "Todas las ideas de citas",
+            "welcome_message": "¡Bienvenido a este boilerplate!"
+        },
+        "dateIdeas": {
+            "title": "Nuestras Ideas de Citas"
+        },
+        "souvenirs": {
+            "title": "Nuestros Recuerdos",
+            "subtitle": "Momentos que hemos compartido juntos",
+            "memories": "recuerdos",
+            "empty": "Aún no hay recuerdos. ¡Marca algunas citas como completadas!",
+            "filters": {
+                "all_time": "Todo",
+                "year": "Año",
+                "month": "Mes",
+                "all_months": "Todos los meses",
+                "showing": "Mostrando",
+                "of": "de"
+            }
+        },
+        "account": {
+            "errors": {
+                "check_approval": "Por favor marca la casilla para confirmar la eliminación de tu cuenta.",
+                "password_min": "La contraseña debe tener al menos 6 caracteres.",
+                "name_min": "El nombre debe tener al menos 2 caracteres.",
+                "name_max": "El nombre debe tener como máximo 25 caracteres.",
+                "forename_min": "El nombre de pila debe tener al menos 2 caracteres.",
+                "forename_max": "El nombre de pila debe tener como máximo 25 caracteres.",
+                "username_min": "El nombre de usuario debe tener al menos 2 caracteres.",
+                "username_max": "El nombre de usuario debe tener como máximo 25 caracteres.",
+                "invalid_email": "Dirección de correo electrónico inválida.",
+                "current_password_min": "La contraseña actual debe tener al menos 6 caracteres.",
+                "new_password_min": "La nueva contraseña debe tener al menos 6 caracteres.",
+                "new_password_max": "La contraseña debe tener como máximo 25 caracteres.",
+                "new_password_confirm_min": "La confirmación de la nueva contraseña debe tener al menos 6 caracteres.",
+                "passwords_do_not_match": "Las contraseñas no coinciden.",
+                "username_no_spaces": "El nombre de usuario no debe contener espacios al inicio, al final, en medio ni letras mayúsculas."
+            },
+            "account_settings_title": "Configuración de la cuenta",
+            "account_settings_description": "Actualiza tu información personal y los detalles de tu cuenta.",
+            "forename_label": "Nombre de pila",
+            "name_label": "Nombre",
+            "username_label": "Nombre de usuario",
+            "email_label": "Correo electrónico",
+            "password_label": "Contraseña",
+            "choose_image": "Elegir imagen",
+            "delete_account_title": "Eliminar cuenta",
+            "delete_account_description": "Por favor, ten mucho cuidado con tu acción, no hay vuelta atrás",
+            "accept_delete_account": "Acepto eliminar mi cuenta para siempre",
+            "accept_delete_account_description": "Ten en cuenta que esta acción es irreversible y eliminará todos tus datos y configuraciones. Si estás seguro, marca la casilla para confirmar.",
+            "password_placeholder": "********",
+            "delete_account_button": "Eliminar esta cuenta",
+            "edit_profile_title": "Editar perfil",
+            "edit_profile_description": "Realiza cambios a tu contraseña aquí. Haz clic en guardar cuando hayas terminado.",
+            "current_password_label": "Contraseña actual",
+            "new_password_label": "Nueva contraseña",
+            "new_password_confirm_label": "Confirmación de nueva contraseña",
+            "updating_account": "Actualizando cuenta...",
+            "updating_password": "Actualizando contraseña...",
+            "updating_profile_picture": "Actualizando foto de perfil...",
+            "change_password": "Cambiar contraseña",
+            "delete_account": "Eliminar cuenta",
+            "deleting_account": "Eliminando cuenta...",
+            "actions": "Acciones"
+        },
+        "login": {
+            "welcome_back": "Bienvenido de nuevo",
+            "field": "Nombre de usuario o correo",
+            "field_description": "Introduce tu nombre de usuario o correo",
+            "password": "Contraseña",
+            "password_description": "Introduce tu contraseña",
+            "login_button": "Iniciar sesión",
+            "login_button_google": "Iniciar sesión con Google",
+            "no_account": "¿No tienes una cuenta?",
+            "sign_up": "Regístrate",
+            "agree_terms": "Al hacer clic en iniciar sesión, aceptas nuestros Términos de Servicio y Condiciones.",
+            "errors": {
+                "login_name_min": "El nombre de usuario o correo debe tener al menos 2 caracteres",
+                "password_min": "La contraseña debe tener al menos 6 caracteres",
+                "password_max": "La contraseña debe tener como máximo 255 caracteres",
+                "login_name_no_spaces": "El nombre de usuario o correo no debe contener espacios ni mayúsculas."
+            },
+            "or_continue_with": "O continuar con"
+        },
+        "register": {
+            "title": "Crear una cuenta",
+            "password_creation": "Crear una contraseña",
+            "forename": "Nombre de pila",
+            "name": "Nombre",
+            "username": "Nombre de usuario",
+            "username_description": "Introduce tu nombre de usuario",
+            "email": "Correo electrónico",
+            "email_description": "Introduce tu correo electrónico",
+            "password": "Contraseña",
+            "password_description": "Introduce tu contraseña",
+            "confirmPassword": "Confirmar contraseña",
+            "confirmPassword_description": "Introduce tu contraseña de nuevo para verificación",
+            "register": "Registrarse",
+            "register_google": "Registrarse con Google",
+            "already_have_account": "¿Ya tienes una cuenta?",
+            "login": "Iniciar sesión",
+            "terms_and_conditions": "Al hacer clic en registrarse, aceptas nuestros Términos de Servicio y Condiciones.",
+            "errors": {
+                "name_min": "El nombre debe tener al menos 2 caracteres.",
+                "name_max": "El nombre debe tener como máximo 25 caracteres.",
+                "forename_min": "El nombre de pila debe tener al menos 2 caracteres.",
+                "forename_max": "El nombre de pila debe tener como máximo 25 caracteres.",
+                "username_min": "El nombre de usuario debe tener al menos 2 caracteres.",
+                "username_max": "El nombre de usuario debe tener como máximo 25 caracteres.",
+                "username_no_spaces": "El nombre de usuario no debe contener espacios ni mayúsculas.",
+                "invalid_email": "Por favor introduce una dirección de correo válida.",
+                "password_max": "La contraseña debe tener como máximo 255 caracteres.",
+                "passwords_mismatch": "Las contraseñas no coinciden.",
+                "password_invalid": "La contraseña debe tener al menos 8 caracteres y contener al menos una letra minúscula, una mayúscula, un número y un carácter especial."
+            }
+        },
+        "admin": {
+            "home": "Inicio",
+            "dashboard": "Panel",
+            "users": "Usuarios",
+            "settings": "Configuración",
+            "admin": "Admin",
+            "logs": "Registros",
+            "back_to_app": "Volver al inicio",
+            "dashboard_page": {
+                "active_users": "Usuarios activos",
+                "total_users": "Total de usuarios",
+                "auth_methods": "Métodos de autenticación",
+                "auth_methods_description": "Esta sección muestra el número de usuarios registrados con cada método de autenticación.",
+                "of_users": "de todos los usuarios"
+            },
+            "config_page": {
+                "title": "Configuración",
+                "description": "Esta página te permite configurar los ajustes de la aplicación. Asegúrate de guardar tus cambios antes de salir.",
+                "save_changes": "Guardar cambios",
+                "updating_config": "Actualizando configuración...",
+                "app_name": "Nombre de la aplicación",
+                "app_name_description": "Introduce el nombre de tu aplicación. Se mostrará en el encabezado y en varios lugares de la aplicación.",
+                "accent_color": "Color de acento",
+                "accent_color_description": "Elige el color de acento para tu aplicación. Se usará en varios lugares de la aplicación."
+            },
+            "log_page": {
+                "level": "Nivel",
+                "user": "Usuario",
+                "unknow_user": "Usuario desconocido",
+                "message": "Mensaje",
+                "date": "Fecha",
+                "actions": "Acciones",
+                "copy_id": "Copiar ID del registro",
+                "copy_id_success": "ID del registro copiado al portapapeles",
+                "delete_log": "Eliminar este registro",
+                "levels": {
+                    "info": "Info",
+                    "warn": "Advertencia",
+                    "error": "Error",
+                    "debug": "Depuración"
+                }
+            },
+            "users_page": {
+                "user": "Usuario",
+                "username": "Nombre de usuario",
+                "email": "Correo electrónico",
+                "role": "Rol",
+                "joined": "Registrado",
+                "actions": "Acciones",
+                "auth_type": "Tipo de autenticación",
+                "roles": {
+                    "admin": "Administrador",
+                    "user": "Usuario"
+                },
+                "a_user": "un usuario",
+                "actions_type": {
+                    "create": "Crear",
+                    "update": "Actualizar",
+                    "delete": "Eliminar"
+                },
+                "copy_id": "Copiar ID de usuario",
+                "copy_id_success": "ID de usuario copiado al portapapeles",
+                "delete_user": "Eliminar este usuario",
+                "update_user": "Actualizar este usuario",
+                "form": {
+                    "name_min": "El nombre debe tener al menos 2 caracteres.",
+                    "name_max": "El nombre debe tener como máximo 25 caracteres.",
+                    "forename_min": "El nombre de pila debe tener al menos 2 caracteres.",
+                    "forename_max": "El nombre de pila debe tener como máximo 25 caracteres.",
+                    "username_min": "El nombre de usuario debe tener al menos 2 caracteres.",
+                    "username_max": "El nombre de usuario debe tener como máximo 25 caracteres.",
+                    "invalid_email": "Dirección de correo electrónico inválida.",
+                    "username_no_spaces": "El nombre de usuario no debe contener espacios ni mayúsculas.",
+                    "password_required": "La contraseña es obligatoria.",
+                    "confirm_delete_required": "Por favor confirma la eliminación del usuario escribiendo 'DELETE'.",
+                    "forename": "Nombre de pila",
+                    "name": "Nombre",
+                    "username": "Nombre de usuario",
+                    "email": "Correo electrónico",
+                    "password": "Contraseña",
+                    "generate_password": "Generar",
+                    "copy_password": "Copiar contraseña",
+                    "no_password_yet": "Aún no se ha generado contraseña",
+                    "password_generated": "Contraseña generada correctamente",
+                    "password_copied": "Contraseña copiada al portapapeles",
+                    "role": "Rol",
+                    "select_role_placeholder": "Selecciona un rol para el nuevo usuario",
+                    "user": "Usuario",
+                    "admin": "Administrador",
+                    "save": "Guardar",
+                    "update": "Actualizar",
+                    "confirm_delete_label": "Escribe \"DELETE\" para confirmar",
+                    "confirm_delete_placeholder": "DELETE",
+                    "delete": "Eliminar",
+                    "confirm_text_invalid": "El texto de confirmación es incorrecto"
+                }
+            }
+        }
+    },
+    "components": {
+        "inputFile": {
+            "choose_file": "Elegir un archivo",
+            "choose_image": "Elegir una imagen"
+        },
+        "colorPicker": {
+            "preset_colors": "Colores predefinidos",
+            "hex_color": "Color hexadecimal",
+            "hue": "Tono",
+            "saturation": "Saturación",
+            "lightness": "Luminosidad"
+        },
+        "dataTable": {
+            "no_data": "No hay datos disponibles",
+            "columns": "Columnas",
+            "columns_list": {
+                "user": "Usuario",
+                "level": "Nivel",
+                "message": "Mensaje",
+                "createdAt": "Fecha",
+                "username": "Nombre de usuario",
+                "email": "Correo electrónico",
+                "role": "Rol",
+                "auth_type": "Tipo de autenticación"
+            },
+            "create_entity": "Crear una nueva entidad",
+            "delete_entity": "Eliminar todas las entidades",
+            "filters": {
+                "username": "Filtrar por nombre de usuario",
+                "message": "Filtrar por mensaje"
+            },
+            "delete_title": "Eliminar todas las entidades",
+            "delete_description": "¿Estás seguro de que quieres eliminar todas las entidades? Esta acción no se puede deshacer.",
+            "footer": {
+                "page": "Página",
+                "of": "de",
+                "total": "total",
+                "entries": "entradas",
+                "first": "Primera",
+                "last": "Última",
+                "next": "Siguiente",
+                "previous": "Anterior",
+                "per_page": "por página",
+                "all": "Todas"
+            }
+        }
+    },
+    "global": {
+        "buttons": {
+            "cancel": "Cancelar",
+            "save": "Guardar",
+            "update": "Actualizar",
+            "delete": "Eliminar"
+        },
+        "expired_session": "Tu sesión ha expirado, por favor inicia sesión de nuevo."
+    },
+    "common": {
+        "loading": "Cargando...",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "create": "Crear"
+    },
+    "dashboard": {
+        "stats": {
+            "total": "Ideas totales",
+            "completed": "Completadas",
+            "pending": "Pendientes",
+            "progress": "Progreso"
+        },
+        "last_completed": {
+            "title": "Última cita completada",
+            "description": "Tu última experiencia compartida",
+            "empty": "Aún no hay citas completadas"
+        },
+        "suggestions": {
+            "title": "Sugerencias",
+            "description": "Ideas esperando a ser realizadas",
+            "empty": "No hay ideas pendientes",
+            "reshuffle": "Nuevas sugerencias"
+        }
+    },
+    "souvenirs": {
+        "today": "Hoy",
+        "yesterday": "Ayer",
+        "days_ago": "Hace {{count}} días",
+        "weeks_ago": "Hace {{count}} semanas",
+        "months_ago": "Hace {{count}} meses",
+        "years_ago": "Hace {{count}} años"
+    },
+    "categories": {
+        "messages": {
+            "created": "Categoría creada correctamente",
+            "updated": "Categoría actualizada correctamente",
+            "deleted": "Categoría eliminada"
+        },
+        "errors": {
+            "cannot_delete_default": "Las categorías predeterminadas no se pueden eliminar"
+        },
+        "manage": {
+            "title": "Gestionar categorías",
+            "button": "Categorías",
+            "add": "Añadir categoría",
+            "name_placeholder": "Nombre de la categoría",
+            "default": "Predeterminada"
+        }
+    },
+    "dates": {
+        "status": {
+            "completed": "Completada",
+            "pending": "Pendiente"
+        },
+        "actions": {
+            "add": "Nueva idea"
+        },
+        "filters": {
+            "title": "Filtros",
+            "category": "Categoría",
+            "all_categories": "Todas las categorías",
+            "status": "Estado",
+            "all_status": "Todos los estados",
+            "search_placeholder": "Buscar una idea de cita...",
+            "show": "Mostrar",
+            "all": "Todas",
+            "results": "resultados"
+        },
+        "sort": {
+            "title": "Ordenar por",
+            "alphabetical": "Alfabético",
+            "creation_date": "Fecha de creación",
+            "realisation_date": "Fecha de realización"
+        },
+        "form": {
+            "create_title": "Nueva idea de cita",
+            "edit_title": "Editar idea",
+            "name": "Nombre",
+            "name_placeholder": "Ej. Cena a la luz de las velas",
+            "note": "Nota / Anécdota",
+            "note_placeholder": "Una pequeña frase o recuerdo...",
+            "category": "Categoría",
+            "category_placeholder": "Selecciona una categoría",
+            "new_category": "Nueva",
+            "create_category": "Crear una categoría",
+            "category_name_placeholder": "Nombre de la categoría",
+            "category_color": "Color",
+            "add_category": "Añadir categoría"
+        },
+        "completion": {
+            "title": "Marcar como completada",
+            "description": "¿Cuándo completaste \"{{title}}\"?",
+            "date_label": "Fecha de realización",
+            "confirm": "Confirmar"
+        },
+        "messages": {
+            "created": "Idea de cita creada correctamente",
+            "updated": "Idea de cita actualizada",
+            "deleted": "Idea de cita eliminada",
+            "marked_complete": "Cita marcada como completada",
+            "marked_pending": "Cita movida a pendientes"
+        },
+        "empty": {
+            "title": "Aún no hay ideas de citas",
+            "action": "Crea tu primera idea",
+            "no_results": "No se encontraron resultados"
+        },
+        "images": {
+            "title": "Recuerdos fotográficos",
+            "add": "Añadir fotos",
+            "hint": "JPG, PNG, GIF, WebP (máx 3MB)",
+            "max_limit": "Máximo 5 imágenes por cita",
+            "upload_success": "Foto(s) subida(s) correctamente",
+            "upload_error": "Error al subir",
+            "delete_success": "Foto eliminada",
+            "delete_error": "Error al eliminar"
+        }
+    },
+    "server": {
+        "global": {
+            "errors": {
+                "missing_fields": "Por favor completa todos los campos obligatorios.",
+                "no_such_user": "No se encontró ese usuario."
+            }
+        },
+        "auth": {
+            "errors": {
+                "regex": "La contraseña debe tener al menos 8 caracteres y contener al menos una letra minúscula, una mayúscula, un número y un carácter especial",
+                "password_no_match": "Las contraseñas no coinciden",
+                "email_taken": "Este correo electrónico ya está en uso",
+                "username_taken": "Este nombre de usuario ya está en uso",
+                "invalid_credentials": "Credenciales inválidas"
+            },
+            "messages": {
+                "register_success": "Registro exitoso",
+                "login_success": "Inicio de sesión exitoso",
+                "logout_success": "Cierre de sesión exitoso"
+            }
+        },
+        "upload": {
+            "errors": {
+                "no_file": "No se subió ningún archivo",
+                "invalid_file_type": "Tipo de archivo inválido. Solo se permiten jpg, jpeg, png, gif y svg",
+                "limit": "El tamaño del archivo excede el límite permitido."
+            },
+            "messages": {
+                "avatar_success": "Avatar actualizado correctamente"
+            }
+        },
+        "users": {
+            "errors": {
+                "email_taken": "Este correo electrónico ya está en uso",
+                "username_taken": "Este nombre de usuario ya está en uso",
+                "invalid_role": "Rol inválido",
+                "actual_password_incorrect": "La contraseña actual es incorrecta",
+                "regex_error": "La contraseña debe contener al menos 8 caracteres, incluyendo mayúsculas, minúsculas, números y caracteres especiales.",
+                "passwords_do_not_match": "La nueva contraseña y la confirmación no coinciden",
+                "password_incorrect": "La contraseña es incorrecta"
+            },
+            "messages": {
+                "user_created": "Usuario creado correctamente",
+                "user_updated": "Usuario actualizado correctamente",
+                "password_updated": "Contraseña actualizada correctamente",
+                "user_deleted": "Usuario eliminado correctamente"
+            }
+        },
+        "admin": {
+            "errors": {
+                "invalid_config": "Configuración inválida",
+                "config_not_found": "Configuración no encontrada",
+                "log_not_found": "Registro no encontrado"
+            },
+            "messages": {
+                "config_updated": "Configuración actualizada correctamente",
+                "log_deleted": "Registro eliminado correctamente",
+                "logs_cleared": "Todos los registros eliminados correctamente"
+            }
+        }
+    }
+}

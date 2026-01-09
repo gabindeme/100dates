@@ -1,18 +1,23 @@
 import { useTranslation } from "react-i18next";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { DateInterface } from "@/interfaces/Dates";
 import { CategoryInterface } from "@/interfaces/Category";
 import { axiosConfig } from "@/config/axiosConfig";
 import { toast } from "sonner";
-import { Heart, Calendar, Quote, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Heart, Calendar, Quote, X, ChevronLeft, ChevronRight, Filter } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export const Souvenirs = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
     const [completedDates, setCompletedDates] = useState<DateInterface[]>([]);
     const [categories, setCategories] = useState<CategoryInterface[]>([]);
     const [loading, setLoading] = useState(true);
     const [visibleItems, setVisibleItems] = useState<Set<string>>(new Set());
     const observerRef = useRef<IntersectionObserver | null>(null);
+
+    // Filter state
+    const [selectedYear, setSelectedYear] = useState<string>("all");
+    const [selectedMonth, setSelectedMonth] = useState<string>("all");
 
     // Lightbox state
     const [lightboxOpen, setLightboxOpen] = useState(false);
@@ -45,6 +50,59 @@ export const Souvenirs = () => {
         fetchData();
     }, [t]);
 
+    // Get available years from completed dates
+    const availableYears = useMemo(() => {
+        const years = new Set<number>();
+        completedDates.forEach(date => {
+            if (date.date_realised) {
+                years.add(new Date(date.date_realised).getFullYear());
+            }
+        });
+        return Array.from(years).sort((a, b) => b - a);
+    }, [completedDates]);
+
+    // Get available months for selected year
+    const availableMonths = useMemo(() => {
+        if (selectedYear === "all") return [];
+        const months = new Set<number>();
+        completedDates.forEach(date => {
+            if (date.date_realised) {
+                const d = new Date(date.date_realised);
+                if (d.getFullYear().toString() === selectedYear) {
+                    months.add(d.getMonth());
+                }
+            }
+        });
+        return Array.from(months).sort((a, b) => a - b);
+    }, [completedDates, selectedYear]);
+
+    // Filter dates based on selection
+    const filteredDates = useMemo(() => {
+        return completedDates.filter(date => {
+            if (!date.date_realised) return false;
+            const d = new Date(date.date_realised);
+
+            if (selectedYear !== "all" && d.getFullYear().toString() !== selectedYear) {
+                return false;
+            }
+            if (selectedMonth !== "all" && d.getMonth().toString() !== selectedMonth) {
+                return false;
+            }
+            return true;
+        });
+    }, [completedDates, selectedYear, selectedMonth]);
+
+    // Reset month when year changes
+    useEffect(() => {
+        setSelectedMonth("all");
+    }, [selectedYear]);
+
+    // Get month name in current locale
+    const getMonthName = (monthIndex: number) => {
+        const date = new Date(2000, monthIndex, 1);
+        return date.toLocaleDateString(i18n.language, { month: 'long' });
+    };
+
     useEffect(() => {
         observerRef.current = new IntersectionObserver(
             (entries) => {
@@ -71,7 +129,7 @@ export const Souvenirs = () => {
 
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
-        return date.toLocaleDateString('fr-FR', {
+        return date.toLocaleDateString(i18n.language, {
             weekday: 'long',
             year: 'numeric',
             month: 'long',
@@ -131,8 +189,8 @@ export const Souvenirs = () => {
 
     return (
         <div className="container mx-auto p-4 max-w-4xl">
-            <div className="text-center mb-12">
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-sidebar-accent-foreground to-pink-300 bg-clip-text text-transparent mb-2">
+            <div className="text-center mb-8">
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-transparent mb-2">
                     {t("pages.souvenirs.title")}
                 </h1>
                 <p className="text-muted-foreground">{t("pages.souvenirs.subtitle")}</p>
@@ -142,7 +200,51 @@ export const Souvenirs = () => {
                 </div>
             </div>
 
-            {completedDates.length === 0 ? (
+            {/* Filters */}
+            {completedDates.length > 0 && availableYears.length > 0 && (
+                <div className="flex flex-wrap items-center justify-center gap-3 mb-8 p-4 bg-card rounded-xl border">
+                    <Filter className="h-4 w-4 text-muted-foreground" />
+
+                    {/* Year filter */}
+                    <Select value={selectedYear} onValueChange={setSelectedYear}>
+                        <SelectTrigger className="w-32">
+                            <SelectValue placeholder={t("pages.souvenirs.filters.year")} />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="all">{t("pages.souvenirs.filters.all_time")}</SelectItem>
+                            {availableYears.map(year => (
+                                <SelectItem key={year} value={year.toString()}>{year}</SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
+
+                    {/* Month filter - only show if a year is selected */}
+                    {selectedYear !== "all" && availableMonths.length > 0 && (
+                        <Select value={selectedMonth} onValueChange={setSelectedMonth}>
+                            <SelectTrigger className="w-40">
+                                <SelectValue placeholder={t("pages.souvenirs.filters.month")} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="all">{t("pages.souvenirs.filters.all_months")}</SelectItem>
+                                {availableMonths.map(month => (
+                                    <SelectItem key={month} value={month.toString()}>
+                                        {getMonthName(month)}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                    )}
+
+                    {/* Results count */}
+                    {(selectedYear !== "all" || selectedMonth !== "all") && (
+                        <span className="text-sm text-muted-foreground ml-2">
+                            {t("pages.souvenirs.filters.showing")} {filteredDates.length} {t("pages.souvenirs.filters.of")} {completedDates.length}
+                        </span>
+                    )}
+                </div>
+            )}
+
+            {filteredDates.length === 0 ? (
                 <div className="text-center py-16 text-muted-foreground">
                     <Heart className="h-16 w-16 mx-auto mb-4 opacity-20" />
                     <p className="text-lg">{t("pages.souvenirs.empty")}</p>
@@ -152,7 +254,7 @@ export const Souvenirs = () => {
                     {/* Timeline line */}
                     <div className="absolute left-8 md:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-pink-500 via-purple-500 to-indigo-500" />
 
-                    {completedDates.map((date, index) => {
+                    {filteredDates.map((date, index) => {
                         const isLeft = index % 2 === 0;
                         const itemId = `item-${date._id}`;
                         const isVisible = visibleItems.has(itemId);
@@ -233,6 +335,7 @@ export const Souvenirs = () => {
                                                         <img
                                                             src={img}
                                                             alt=""
+                                                            loading="lazy"
                                                             className="w-full h-full object-cover"
                                                         />
                                                     </div>

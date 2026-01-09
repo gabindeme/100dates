@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import { FR, GB } from "country-flag-icons/react/3x2";
+import { FR, GB, ES, DE } from "country-flag-icons/react/3x2";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,11 +13,14 @@ import { getFullNamesOfLocales, listOfLocales } from "@/lib/i18n";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 
-interface LanguageChangerProps {
-  isMobile?: boolean;
-}
+const flagComponents: { [key: string]: React.ComponentType<{ className?: string }> } = {
+  en: GB,
+  fr: FR,
+  es: ES,
+  de: DE,
+};
 
-export const LanguageChanger = ({ isMobile = false }: LanguageChangerProps) => {
+export const LanguageChanger = () => {
   const {
     i18n: { changeLanguage, language, t },
   } = useTranslation();
@@ -59,17 +62,19 @@ export const LanguageChanger = ({ isMobile = false }: LanguageChangerProps) => {
       <DropdownMenuContent className="w-40" align="center" sideOffset={8}>
         <DropdownMenuLabel>{t("navbar.language")}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        {listOfLocales.map((l) => (
-          <DropdownMenuItem
-            key={l}
-            onSelect={() => handleChangeLanguage(l)}
-            className={`cursor-pointer flex items-center gap-2 min-h-[44px] ${language === l ? "bg-secondary" : ""}`}
-          >
-            {l === "fr" && <FR className="w-6 h-4" />}
-            {l === "en" && <GB className="w-6 h-4" />}
-            {getFullNamesOfLocales(l)}
-          </DropdownMenuItem>
-        ))}
+        {listOfLocales.map((l) => {
+          const FlagIcon = flagComponents[l];
+          return (
+            <DropdownMenuItem
+              key={l}
+              onClick={() => handleChangeLanguage(l)}
+              className={`cursor-pointer flex items-center gap-2 ${language === l ? "bg-secondary" : ""}`}
+            >
+              {FlagIcon && <FlagIcon className="w-5 h-4 rounded-sm" />}
+              {getFullNamesOfLocales(l)}
+            </DropdownMenuItem>
+          );
+        })}
       </DropdownMenuContent>
     </DropdownMenu>
   );
