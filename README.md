@@ -130,4 +130,4 @@ Pour importer les dates initiales dans MongoDB Compass :
 
 ## Auteur
 
-Basé sur le [MERN Boilerplate](https://github.com/teovlt/MERN-BoilerPlate) de [Téo Villet]([https://](https://github.com/teovlt).
+Basé sur le [MERN Boilerplate](https://github.com/teovlt/MERN-BoilerPlate) de [Téo Villet](https://github.com/teovlt).
