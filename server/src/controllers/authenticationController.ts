@@ -57,17 +57,17 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 
     if (photoURL) {
       try {
-        const avatarPath = await saveAvatarFromUrl(photoURL, user._id);
-        if (avatarPath) {
-          user.avatar = `${req.protocol}://${req.get("host")}${avatarPath}`;
+        const avatarUrl = await saveAvatarFromUrl(photoURL, user._id);
+        if (avatarUrl) {
+          user.avatar = avatarUrl;
           await user.save();
         }
       } catch (err: any) {
         console.error("Failed to download avatar:", err.message);
       }
     } else {
-      const avatarPath = await generateRandomAvatar(user._id);
-      user.avatar = `${req.protocol}://${req.get("host")}${avatarPath}`;
+      const avatarUrl = await generateRandomAvatar(user._id);
+      user.avatar = avatarUrl;
       await user.save();
     }
 
